@@ -7,7 +7,10 @@ export interface Product {
 
 export async function parseProductsCSV(): Promise<Product[]> {
   try {
-    const response = await fetch('/src/data/PGD WOODEN HOUSE first DB - Sheet1 (3) copy.csv');
+    const response = await fetch('/products.csv');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch CSV: ${response.status}`);
+    }
     const csv = await response.text();
 
     const lines = csv.split('\n').filter(line => line.trim());
